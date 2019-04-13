@@ -280,6 +280,7 @@ void jychm::read_ItemInfo()
 		items.push_back(tmpitem);
 	}
 
+
 	lua_pop(pl, 1);
 
 
@@ -306,6 +307,8 @@ void jychm::read_ItemInfo()
 
 
 		outfile.close();
+
+
 
 	}
 
@@ -555,4 +558,9 @@ bool jychm::setbase()
 
 	return true;
 
+}
+
+bool jychm::loadimage(string pid)
+{
+	return true;
 }

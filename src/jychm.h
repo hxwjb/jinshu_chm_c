@@ -55,5 +55,6 @@ public:
 	bool setitems();
 	bool setkongfus();
 	bool setbase();
+	bool loadimage(string pid);
 };
 
