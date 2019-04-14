@@ -166,6 +166,51 @@ bool jychm::getinfo(string filepath)
 	return true;
 }
 
+void jychm::read_TFJS_baseinfo()
+{
+	lua_getglobal(pL_main, "TFJS");
+
+	basic_ofstream<char> outfile;
+
+
+
+	outfile.open("天赋系统.txt");
+
+
+	string nameid = "";
+
+	lua_pushnil(pL_main);
+	while (lua_next(pL_main, -2))
+	{
+		//这时值在-1（栈顶）处，key在-2处，表在-3处  
+		lua_pushvalue(pL_main, -2);
+		if (lua_isstring(pL_main, -1)) {
+			const char* str = lua_tostring(pL_main, -1);
+			printf("%s : ", str);
+
+			nameid = string(str);
+			outfile << nameid;
+		}
+
+		vector<string> v;
+		get_strinfo(pL_main, v);
+		vector<string>::iterator it = v.begin();
+		// vector<int>::const_iterator iter=v.begin();
+		for (; it != v.end(); ++it)
+		{
+			outfile << "\t"<<*it;
+		}
+		outfile << endl;
+
+		lua_pop(pL_main, 1);//把栈顶的值移出栈，让key成为栈顶以便继续遍历  
+	}
+	outfile.close();
+
+
+	lua_pop(pL_main, 1);
+}
+
+
 
 void jychm::read_RWWH_baseinfo()
 {
@@ -392,6 +437,8 @@ void jychm::init_baseinfo()
 	read_ItemInfo();
 
 	read_RWWH_baseinfo();
+
+	read_TFJS_baseinfo();
 }
 
 

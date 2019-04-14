@@ -211,7 +211,7 @@ int main(int argc, char* argv[])
     JY_Debug("LoadMB();");
     LoadMB(_(HZMB_FILE));  //加载汉字字符集转换码表
 
-	//g_CHM = 1;
+	g_CHM = 1;
     JY_Debug("Lua_Main();");
     Lua_Main(pL_main);          //调用Lua主函数，开始游戏
 
