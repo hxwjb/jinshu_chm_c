@@ -166,6 +166,54 @@ bool jychm::getinfo(string filepath)
 	return true;
 }
 
+
+void jychm::read_RWWH_baseinfo()
+{
+	lua_getglobal(pL_main, "RWWH");
+
+	basic_ofstream<char> outfile;
+
+
+
+	outfile.open("人物外号.txt");
+
+
+	string nameid = "";
+
+	lua_pushnil(pL_main);
+	while (lua_next(pL_main, -2))
+	{
+		//这时值在-1（栈顶）处，key在-2处，表在-3处  
+		lua_pushvalue(pL_main, -2);
+		if (lua_isstring(pL_main, -1)) {
+			const char* str = lua_tostring(pL_main, -1);
+			printf("%s : ", str);
+
+			nameid = string(str);
+
+		}
+
+		if (lua_isstring(pL_main, -2)) {
+			const char* str = lua_tostring(pL_main, -2);
+			//printf("%s \r\n", str);
+			string tmpstr = string(str);
+
+			outfile << nameid << "\t" << tmpstr << endl;
+
+		}
+		else
+		{
+			//printf("%s \r\n", "not str");
+		}
+
+		lua_pop(pL_main, 2);//把栈顶的值移出栈，让key成为栈顶以便继续遍历  
+	}
+	outfile.close();
+
+
+	lua_pop(pL_main, 1);
+}
+
 void jychm::read_CC_baseinfo()
 {
 	lua_getglobal(pL_main, "CC");
@@ -342,6 +390,8 @@ void jychm::init_baseinfo()
 	read_CC_baseinfo();
 
 	read_ItemInfo();
+
+	read_RWWH_baseinfo();
 }
 
 

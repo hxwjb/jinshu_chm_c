@@ -38,6 +38,7 @@ public:
 	int* get_subinfo();
 	bool getBaseinfo();
 	bool getinfo(std::string filepath);
+	void read_RWWH_baseinfo();
 	void read_CC_baseinfo();
 	void get_strinfo(lua_State* pl, std::vector<std::string>& v);
 	void read_ItemInfo();
